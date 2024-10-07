@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Product Table</title>
+    <style>
+        table {
+            width: 70%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        img {
+            width: 50px;
+            height: auto;
+        }
+        input[type="text"], input[type="number"] {
+            width: 80px;
+        }
+        .arrow {
+            font-size: 18px;
+            margin-left: 10px;
+        }
+        .arrow.green {
+            color: green;
+        }
+        .arrow.red {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Product Price Table</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Image</th>
+                <th>Price ($)</th>
+                <th>Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Product 1</td>
+                <td><img src="https://via.placeholder.com/50" alt="Product 1"></td>
+                <td>
+                    <input type="text" id="price1" value="10" onchange="updateArrow(1)">
+                    <span class="arrow" id="arrow1"></span>
+                </td>
+                <td><input type="number" id="quantity1" value="1" min="1"></td>
+            </tr>
+            <tr>
+                <td>Product 2</td>
+                <td><img src="https://via.placeholder.com/50" alt="Product 2"></td>
+                <td>
+                    <input type="text" id="price2" value="20" onchange="updateArrow(2)">
+                    <span class="arrow" id="arrow2"></span>
+                </td>
+                <td><input type="number" id="quantity2" value="1" min="1"></td>
+            </tr>
+            <tr>
+                <td>Product 3</td>
+                <td><img src="https://via.placeholder.com/50" alt="Product 3"></td>
+                <td>
+                    <input type="text" id="price3" value="30" onchange="updateArrow(3)">
+                    <span class="arrow" id="arrow3"></span>
+                </td>
+                <td><input type="number" id="quantity3" value="1" min="1"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        let previousPrices = {
+            1: 10,
+            2: 20,
+            3: 30
+        };
+
+        function updateArrow(productIndex) {
+            const priceInput = document.getElementById(`price${productIndex}`);
+            const price = parseFloat(priceInput.value) || 0;
+
+            // Check if the price went up or down and display the corresponding arrow
+            const arrow = document.getElementById(`arrow${productIndex}`);
+            if (price > previousPrices[productIndex]) {
+                arrow.textContent = "↑";
+                arrow.className = "arrow green";
+            } else if (price < previousPrices[productIndex]) {
+                arrow.textContent = "↓";
+                arrow.className = "arrow red";
+            } else {
+                arrow.textContent = "";
+            }
+
+            // Update the previous price for the next comparison
+            previousPrices[productIndex] = price;
+        }
+    </script>
+
+</body>
+</html>
